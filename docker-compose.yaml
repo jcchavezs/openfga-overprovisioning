@@ -1,0 +1,29 @@
+services:
+  fga-drive-example:
+    depends_on:
+      openfga:
+        condition: service_started
+    build:
+      context: fga-drive-example
+      dockerfile: ../fga-drive-example.Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - fga-drive-example.env
+      - openfga.store.env
+      - auth0.env
+
+  openfga:
+    image: openfga/openfga:latest
+    container_name: openfga
+    environment:
+      - OPENFGA_DATASTORE_ENGINE=memory
+      - OPENFGA_LOG_FORMAT=json
+    command: run
+    ports:
+      # Needed for the http server
+      - "8080:8080"
+      # Needed for the grpc server (if used)
+      - "8081:8081"
+      # Needed for the playground (Do not enable in prod!)
+      - "3001:3000"

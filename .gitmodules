@@ -1,0 +1,4 @@
+[submodule "fga-drive-example"]
+	path = fga-drive-example
+	url = https://github.com/jcchavezs/fga-drive-example.git
+	branch = master
